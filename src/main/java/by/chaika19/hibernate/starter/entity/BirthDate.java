@@ -3,7 +3,7 @@ package by.chaika19.hibernate.starter.entity;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 
-public record BirthDay (LocalDate birthDate) {
+public record BirthDate(LocalDate birthDate) {
     public long getAge() {
         return ChronoUnit.YEARS.between(birthDate, LocalDate.now());
     }
