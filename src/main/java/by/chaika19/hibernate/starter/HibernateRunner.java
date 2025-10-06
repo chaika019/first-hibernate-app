@@ -1,44 +1,40 @@
 package by.chaika19.hibernate.starter;
 
-import by.chaika19.hibernate.starter.converter.BirthdayConverter;
-import by.chaika19.hibernate.starter.entity.BirthDay;
+import by.chaika19.hibernate.starter.entity.BirthDate;
 import by.chaika19.hibernate.starter.entity.Role;
 import by.chaika19.hibernate.starter.entity.User;
-import org.hibernate.boot.model.naming.CamelCaseToUnderscoresNamingStrategy;
-import org.hibernate.cfg.Configuration;
+import by.chaika19.hibernate.starter.util.HibertnateUtil;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 
 import java.time.LocalDate;
 
 public class HibernateRunner {
     public static void main(String[] args) {
-        Configuration configuration = new Configuration();
-        configuration.configure();
-        configuration.addAttributeConverter(new BirthdayConverter(), true);
-//        configuration.addAnnotatedClass(User.class);
-//        configuration.setPhysicalNamingStrategy(new CamelCaseToUnderscoresNamingStrategy());
-        try (var sessionFactory = configuration.buildSessionFactory();
-             var session = sessionFactory.openSession();) {
-            session.beginTransaction();
+        User user = User.builder()
+                .username("a52@gmail.com")
+                .firstname("Ivan")
+                .lastname("Ivanovich")
+                .birthDate(new BirthDate(LocalDate.of(2005, 10, 22)))
+                .role(Role.ADMIN)
+                .build();
 
-            User user = User.builder()
-                    .username("a4@gmail.com")
-                    .firstname("Ivan")
-                    .lastname("Ivanovich")
-                    .birthDay(
-                            new BirthDay(LocalDate.of(2001, 9, 11)))
-                    .role(Role.ADMIN)
-                    .build();
-//            session.save(user);
-//            session.update(user);
-//            session.saveOrUpdate(user);
-//            session.delete(user);
-            User user1 = session.get(User.class, "a2@gmail.com");
-            user1.setFirstname("Bayan");
-//            session.flush();
-//            session.clear();
-//            session.evict(user1);
-            System.out.println(user1);
-            session.getTransaction().commit();
+        try (SessionFactory sessionFactory = HibertnateUtil.buildSessionFactory()) {
+            try (Session session1 = sessionFactory.openSession()) {
+                session1.beginTransaction();
+
+                session1.saveOrUpdate(user);
+
+                user.setFirstname("Pasha");
+                System.out.println(session1.isDirty());
+
+                session1.getTransaction().commit();
+            }
+//            try (Session session2 = sessionFactory.openSession()) {
+//                session2.beginTransaction();
+//                session2.delete(user);
+//                session2.getTransaction().commit();
+//            }
         }
     }
 }
