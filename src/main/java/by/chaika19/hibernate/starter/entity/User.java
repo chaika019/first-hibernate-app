@@ -22,7 +22,7 @@ public class User {
     private String lastname;
     @Convert(converter = BirthdayConverter.class)
     @Column(name = "birth_day")
-    private BirthDay birthDay;
+    private BirthDate birthDate;
     @Enumerated(EnumType.STRING)
     private Role role;
 }
