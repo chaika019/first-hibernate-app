@@ -16,18 +16,9 @@ import java.time.LocalDate;
 @Entity
 @Table(name = "users", schema = "public")
 public class User {
-    @Id
-//    Автоматом
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
 
-//    Для ручной настройки
-//    @GeneratedValue(generator = "user_gen", strategy = GenerationType.SEQUENCE)
-//    @SequenceGenerator(name = "user_gen", sequenceName = "users_id_seq", allocationSize = 1)
-    private Integer id;
     private String username;
-//    Можно так
-//    @AttributeOverride(name = "birthDay", column = @Column(name = "birth_day"))
-    @Embedded
+    @EmbeddedId
     private PersonalInfo personalInfo;
     @Enumerated(EnumType.STRING)
     private Role role;
