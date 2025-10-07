@@ -17,12 +17,18 @@ import java.time.LocalDate;
 @Table(name = "users", schema = "public")
 public class User {
     @Id
+//    Автоматом
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+
+//    Для ручной настройки
+//    @GeneratedValue(generator = "user_gen", strategy = GenerationType.SEQUENCE)
+//    @SequenceGenerator(name = "user_gen", sequenceName = "users_id_seq", allocationSize = 1)
+    private Integer id;
     private String username;
-    private String firstname;
-    private String lastname;
-    @Convert(converter = BirthdayConverter.class)
-    @Column(name = "birth_day")
-    private BirthDate birthDate;
+//    Можно так
+//    @AttributeOverride(name = "birthDay", column = @Column(name = "birth_day"))
+    @Embedded
+    private PersonalInfo personalInfo;
     @Enumerated(EnumType.STRING)
     private Role role;
 }
