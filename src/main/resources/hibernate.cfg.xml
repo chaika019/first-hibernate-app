@@ -15,5 +15,9 @@
     <property name="hibernate.dialect">org.hibernate.dialect.PostgreSQLDialect</property>
 
     <mapping class="by.chaika19.hibernate.starter.entity.User"/>
+    <mapping class="by.chaika19.hibernate.starter.entity.UserChat"/>
+    <mapping class="by.chaika19.hibernate.starter.entity.Chat"/>
+    <mapping class="by.chaika19.hibernate.starter.entity.Profile"/>
+    <mapping class="by.chaika19.hibernate.starter.entity.Company"/>
   </session-factory>
 </hibernate-configuration>
